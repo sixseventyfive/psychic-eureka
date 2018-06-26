@@ -44,4 +44,14 @@ if __name__ == '__main__':
     with open('db_init.sql', 'r') as tbl_init:
         database(tbl_init, True)
     uid = input('Please enter your user ID:\n')
-    uid_valid = 'SELECT DISTINCT user_id FROM users'
+    uid_valid = 'SELECT COUNT(*) FROM users WHERE user_id = {}'.format(uid)
+    uid_valid, msg = database(uid_valid, False)
+    try:
+        uid_valid[0]
+    except IndexError:
+        print('create new user')
+#    if uid_valid[0] == 1:
+#        pass
+#    else:
+#        #create_new_user()
+#        pass
